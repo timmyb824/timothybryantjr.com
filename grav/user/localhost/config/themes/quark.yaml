@@ -10,5 +10,10 @@ blog-page: /blog
 spectre:
   exp: false
   icons: false
-custom_logo: {  }
+custom_logo:
+  user/themes/quark/images/logo/timmyb-logo.svg:
+    name: timmyb-logo.svg
+    full_path: timmyb-logo.svg
+    type: image/svg+xml
+    path: user/themes/quark/images/logo/timmyb-logo.svg
 custom_logo_mobile: {  }
