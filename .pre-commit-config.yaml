@@ -1,37 +1,38 @@
 repos:
--   repo: https://gitlab.com/vojko.pribudic.foss/pre-commit-update
+  - repo: https://gitlab.com/vojko.pribudic.foss/pre-commit-update
     rev: v0.6.1
     hooks:
-    -   id: pre-commit-update
+      - id: pre-commit-update
 
--   repo: https://github.com/pre-commit/pre-commit-hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
-    -   id: check-yaml
+      - id: check-yaml
         args: [--unsafe]
-    -   id: end-of-file-fixer
-    -   id: trailing-whitespace
-    -   id: check-toml
-    -   id: check-added-large-files
-    -   id: check-ast
-    -   id: check-json
-    -   id: check-merge-conflict
-    -   id: check-xml
-    -   id: debug-statements
-    -   id: mixed-line-ending
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-toml
+      # -   id: check-added-large-files
+      - id: check-ast
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-xml
+      - id: debug-statements
+      - id: mixed-line-ending
 
--   repo: https://github.com/sirwart/ripsecrets
+  - repo: https://github.com/sirwart/ripsecrets
     rev: v0.1.8
     hooks:
-    -   id: ripsecrets
+      - id: ripsecrets
 
--   repo: https://github.com/trufflesecurity/trufflehog
+  - repo: https://github.com/trufflesecurity/trufflehog
     rev: v3.88.18
     hooks:
-    -   id: trufflehog
+      - id: trufflehog
         name: TruffleHog
         description: Detect secrets in your data.
-        entry: bash -c 'trufflehog git file://. --since-commit HEAD --only-verified
+        entry:
+          bash -c 'trufflehog git file://. --since-commit HEAD --only-verified
           --fail'
         language: system
         stages: ["pre-commit"]

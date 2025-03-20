@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grav-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grav
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grav
+  template:
+    metadata:
+      labels:
+        app: grav
+    spec:
+      containers:
+      - name: grav
+        image: your-registry/grav:latest  # You'll need to update this
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: grav-data
+          mountPath: /var/www/grav/backup
+          subPath: backup
+        - name: grav-data
+          mountPath: /var/www/grav/logs
+          subPath: logs
+      volumes:
+      - name: grav-data
+        persistentVolumeClaim:
+          claimName: grav-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grav
+spec:
+  selector:
+    app: grav
+  ports:
+  - port: 80
+    targetPort: 80
+  type: ClusterIP

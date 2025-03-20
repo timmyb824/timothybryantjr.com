@@ -1,35 +1,16 @@
 ---
 services:
   grav:
-    image: dsavell/grav:admin
+    build: .
     container_name: grav
     restart: unless-stopped
     environment:
-      - DUID=1000
-      - DGID=1000
-      - TZ=America/New_York # optional
-      - GRAV_MULTISITE=subdirectory # optional
-      - ROBOTS_DISALLOW=false # optional
-      - GRAV_PLUGINS=devtools,precache # optional
+      - GRAV_MULTISITE=subdirectory
+      - ROBOTS_DISALLOW=false
+      - GRAV_PLUGINS=devtools,precache
     volumes:
       - ./grav/backup:/var/www/grav/backup
       - ./grav/logs:/var/www/grav/logs
       - ./grav/user:/var/www/grav/user
-
     ports:
       - 8001:80
-#
-# ---
-# services:
-#   grav:
-#     image: lscr.io/linuxserver/grav:latest
-#     container_name: grav
-#     environment:
-#       - PUID=1000
-#       - PGID=1000
-#       - TZ=Etc/UTC
-#     volumes:
-#       - ./config:/config
-#     ports:
-#       - 8001:80
-#     restart: unless-stopped
