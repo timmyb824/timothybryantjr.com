@@ -1,8 +1,8 @@
 home:
-  alias: '/blog'
+  alias: "/blog"
 
 pages:
-  theme: quark
+  theme: quark-custom
   process:
     markdown: true
     twig: false
@@ -12,7 +12,7 @@ cache:
   check:
     method: file
   driver: auto
-  prefix: 'g'
+  prefix: "g"
 
 twig:
   cache: true

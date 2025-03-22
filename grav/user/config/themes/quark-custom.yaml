@@ -1,0 +1,26 @@
+streams:
+  schemes:
+    theme:
+      type: ReadOnlyStream
+      prefixes:
+        '': ['user://themes/quark-custom', 'user://themes/quark']
+enabled: true
+production-mode: true
+grid-size: grid-xl
+header-fixed: true
+header-animated: true
+header-dark: false
+header-transparent: false
+sticky-footer: true
+blog-page: /blog
+spectre:
+  exp: false
+  icons: false
+custom_logo:
+  user/themes/quark-custom/images/logo/timmyb-logo.svg:
+    name: timmyb-logo.svg
+    full_path: timmyb-logo.svg
+    type: image/svg+xml
+    size: 304
+    path: user/themes/quark-custom/images/logo/timmyb-logo.svg
+custom_logo_mobile: {  }
