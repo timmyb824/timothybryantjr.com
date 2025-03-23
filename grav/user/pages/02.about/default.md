@@ -12,9 +12,9 @@ I'm a passionate Site Reliability Engineer and DevOps practitioner with a deep i
 
 - 🔭 Developing tools for system monitoring and URL health checking
 - 🛠️ Building and maintaining cloud-native infrastructure
-- 📝 Sharing technical insights on [my blog](https://blog.timothybryantjr.com)
+- 📝 Sharing technical insights on [my blog](https://timothybryantjr.com/blog)
 - 🌱 Continuously learning and experimenting with new technologies
-- ⚡ Outside of tech, I enjoy car detailing, working on my yard, and watching sports
+- ⚡ Outside of tech, I enjoy car detailing, working on my yard, watching sports, collecting pocket knives, and spending time with my family (Wife, Son, Dog, and 2 Cats)
 
 ### Experience
 
