@@ -5,6 +5,7 @@ REGISTRY="registry.local.timmybtech.com"
 TAG="latest"
 PLATFORM="linux/amd64"
 ARGOCD_APP_NAME="timothybryantjr"
+ARGOCD_SERVER="argocd.local.timmybtech.com"
 DEPLOYMENT_NAME="timothybryantjr"
 NAMESPACE="timothybryantjr"
 
@@ -21,6 +22,7 @@ podman push $FULL_IMAGE_NAME
 
 if command -v argocd >/dev/null 2>&1; then
     echo "ArgoCD CLI detected, attempting to refresh application..."
+    argocd login $ARGOCD_SERVER --grpc-web
     if argocd app get "$ARGOCD_APP_NAME" --grpc-web >/dev/null 2>&1; then
         argocd app get "$ARGOCD_APP_NAME" --hard-refresh --grpc-web
         echo "ArgoCD application refresh triggered successfully!"
