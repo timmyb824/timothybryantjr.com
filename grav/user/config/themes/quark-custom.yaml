@@ -6,7 +6,7 @@ streams:
         '': ['user://themes/quark-custom', 'user://themes/quark']
 enabled: true
 production-mode: true
-grid-size: grid-xl
+grid-size: grid-lg
 header-fixed: true
 header-animated: true
 header-dark: false
