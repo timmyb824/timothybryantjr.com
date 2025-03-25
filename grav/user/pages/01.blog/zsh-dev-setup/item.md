@@ -63,7 +63,7 @@ This modular structure offers several benefits:
 
 ### Custom Plugin Management
 
-Instead of relying on Oh-My-Zsh's plugin system, I've implemented a lightweight plugin manager inspired by [zsh_unplugged](https://github.com/mattmc3/zsh_unplugged). My implementation provides:
+Instead of relying on Oh-My-Zsh's plugin system, I've implemented a lightweight [plugin manager](https://raw.githubusercontent.com/timmyb824/dotfiles/refs/heads/main/dot_config/zsh/plugin_manager.zsh) inspired by [zsh_unplugged](https://github.com/mattmc3/zsh_unplugged). My implementation provides:
 
 - Efficient plugin loading with minimal overhead
 
@@ -132,4 +132,4 @@ My `init.zsh` handles core shell setup and integrations:
 
 This setup strikes a balance between functionality and performance. By breaking down configurations into logical modules and leveraging modern tools like Chezmoi, I've created a development environment that's both powerful and maintainable. The custom plugin manager keeps things lean while still providing the extensibility I need.
 
-Feel free to explore my dotfiles and adapt this setup to your needs. Remember, the best shell configuration is the one that works for your specific workflow!
+Feel free to explore my [dotfiles](https://github.com/timmyb824/dotfiles) and adapt this setup to your needs. Remember, the best shell configuration is the one that works for your specific workflow!
