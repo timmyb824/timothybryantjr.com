@@ -1,15 +1,20 @@
-title: Grav
+title: timmyb
+default_lang: en
 author:
-  name: Joe Bloggs
-  email: "joe@test.com"
-blog:
-  route: ""
+  name: 'Tim Bryant'
+  email: timothybryant3@gmail.com
+taxonomies:
+  - category
+  - tag
+  - month
 metadata:
-  description: "Grav is an easy to use, yet powerful, open source flat-file CMS"
-
-taxonomies: [category, tag, month]
-redirects:
-  /changelog: /blog/the-urban-jungle
-routes:
-  /something/else: /blog/focus-and-blur
-  /another/one/(.*): /blog/$1
+  description: 'my personal blog and website'
+summary:
+  enabled: true
+  format: short
+  size: 300
+  delimiter: '==='
+redirects: null
+routes: null
+blog:
+  route: ''
