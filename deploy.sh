@@ -11,17 +11,21 @@ NAMESPACE="timothybryantjr"
 
 FULL_IMAGE_NAME="$REGISTRY/$IMAGE_NAME:$TAG"
 
-echo "Checking for uncommitted changes..."
-if [[ -n $(git status --porcelain) ]]; then
-    echo "Uncommitted changes detected. Please commit or stash them before deploying."
-    exit 1
-fi
+if [ "$1" = "skip" ]; then
+    echo "Skipping pre-deployment checks..."
+else
+    echo "Checking for uncommitted changes..."
+    if [[ -n $(git status --porcelain) ]]; then
+        echo "Uncommitted changes detected. Please commit or stash them before deploying."
+        exit 1
+    fi
 
-echo "Checking if on main branch..."
-BRANCH=$(git rev-parse --abbrev-ref HEAD)
-if [[ "$BRANCH" != "main" ]]; then
-    echo "You must be on the main branch to deploy (current: $BRANCH)."
-    exit 1
+    echo "Checking if on main branch..."
+    BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    if [[ "$BRANCH" != "main" ]]; then
+        echo "You must be on the main branch to deploy (current: $BRANCH)."
+        exit 1
+    fi
 fi
 
 echo "Building image for platform $PLATFORM..."
