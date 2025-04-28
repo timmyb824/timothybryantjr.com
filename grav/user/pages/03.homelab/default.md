@@ -32,6 +32,7 @@ My current hardware setup includes:
 - **HP Laptop**
   - Running Ubuntu Server
   - Used for testing and development tasks
+  - Qdevice for Proxmox HA
 
 ## Network & Storage
 
@@ -56,6 +57,10 @@ My lab runs a mix of containerized and traditional services:
 - **Container Runtime**: Mix of Docker, Podman, and LXC containers
 - **Remote Access**: [Tailscale](https://tailscale.com/) VPN for secure connectivity
 - **Reverse Proxy**: [Traefik](https://traefik.io/) for service routing and SSL termination
+
+## Authentication
+
+- **Authentication**: [Authentik](https://www.authentik.io/) for identity and access management
 
 ## Automation Tools
 
@@ -88,7 +93,7 @@ I extend my homelab with [Oracle Cloud Infrastructure (OCI)](https://www.oracle.
 
 ## Application Services
 
-![Homelab Setup](homelab_20240424.png)
+![Homelab Setup](homelab_20250428.png)
 
 ## Repository Overview
 
