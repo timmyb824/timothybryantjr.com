@@ -2,5 +2,3 @@ ARCHIVE/
 grav/logs/
 grav/backup/
 
-!themes/quark-custom/
-!themes/quark-custom/**
