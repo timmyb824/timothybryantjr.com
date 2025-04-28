@@ -14,20 +14,21 @@ I'm a passionate Site Reliability Engineer and DevOps practitioner with a deep i
 - 🛠️ Building and maintaining cloud-native infrastructure
 - 📝 Sharing technical insights on [my blog](https://timothybryantjr.com/blog)
 - 🌱 Continuously learning and experimenting with new technologies
-- ⚡ Outside of tech, I enjoy car detailing, working on my yard, watching sports, collecting pocket knives, and spending time with my family (Wife, Son, Dog, and 2 Cats)
+- ⚡ Outside of tech, I enjoy axe throwing, watching sports, collecting pocket knives, and spending time with my family (Wife, Son, Dog, and 2 Cats)
 
 ### Experience
 
-Over my career in Site Reliability Engineering and DevOps, I've worked at companies like SimpliSafe, Rackspace Technology, and Vistaprint. My focus has been on:
+Over my career in Site Reliability Engineering and DevOps, I've contributed to companies like SimpliSafe, Rackspace Technology, and Vistaprint. My expertise includes:
 
-- Building and maintaining robust monitoring solutions using tools like New Relic, Datadog, and Prometheus
-- Leading incident management and problem resolution for business-critical systems
-- Developing tools and automation to improve operational efficiency
-- Collaborating across teams to implement observability solutions
-- Establishing and improving incident response processes
-- Designing and implementing monitoring dashboards for better visibility
-- Managing complex customer environments and infrastructure
-- Driving improvements in problem management and incident handling
+- Designing and maintaining robust monitoring solutions using tools such as New Relic, Datadog, Prometheus, and Grafana
+- Leading incident management and resolving issues in business-critical systems to minimize downtime
+- Developing automation tools to streamline operations and enhance efficiency
+- Partnering with cross-functional teams to implement comprehensive observability solutions
+- Establishing and refining incident response and escalation processes for rapid resolution
+- Creating intuitive monitoring dashboards to provide actionable insights and improve system visibility
+- Managing and optimizing complex customer environments and infrastructure at scale
+- Driving continuous improvements in problem management and incident handling practices
+- Implementing production readiness frameworks to ensure system reliability and scalability
 
 ## Technical Profile
 
@@ -36,7 +37,7 @@ Over my career in Site Reliability Engineering and DevOps, I've worked at compan
 - Kubernetes and container orchestration (k3s, Docker, Podman)
 - Cloud platforms (OCI, AWS) and virtualization (Proxmox)
 - Infrastructure as Code with Terraform
-- Automated deployment pipelines
+- Automated deployment pipelines (Jenkins, Github Actions)
 - Network and storage management
 
 ### DevOps & SRE
@@ -44,12 +45,12 @@ Over my career in Site Reliability Engineering and DevOps, I've worked at compan
 - Observability stack (Prometheus, Grafana, New Relic, Datadog)
 - Incident response and problem management
 - Configuration management with Ansible
-- GitOps workflows and CI/CD pipelines
+- GitOps workflows and CI/CD pipelines (ArgoCD)
 - Performance optimization and monitoring
 
 ### Development
 
-- Python automation and tooling
+- Python (and now some Go) automation and tooling
 - Shell scripting and environment customization
 - SQL and database operations
 - Version control with Git
@@ -63,11 +64,11 @@ Over my career in Site Reliability Engineering and DevOps, I've worked at compan
   - Enables easy testing of different editor setups
   - Improves Neovim configuration management
 
-- **[python-SysInformer](https://github.com/timmyb824/python-sysinformer)**
+- **[SysInformer](https://github.com/timmyb824/sysinformer)**
 
   - Lightweight system information tool
   - Reports basic system metrics and status
-  - Focused on simplicity and readability
+  - Focused on simplicity, readability, and portability
 
 - **[SOPS File Encryption Check](https://github.com/timmyb824/sops-file-encryption-check)**
 
@@ -95,23 +96,30 @@ Over my career in Site Reliability Engineering and DevOps, I've worked at compan
   - Ready-to-deploy container setups
   - Personal container service definitions
 
-- **[python-URLPinger](https://github.com/timmyb824/python-URLPinger)**
+- **[PingPulse](https://github.com/timmyb824/PingPulse)**
 
-  - URL monitoring and health checking tool
-  - Tracks website availability and response times
-  - Configurable notifications for status changes
+  - URL and DB monitoring and health checking tool
+  - Prometheus metrics to track availability and response times
+  - YAML configuration with minimal required fields for quick setup
 
 ## Automation & Infrastructure
 
-- **[automation_ansible](https://github.com/timmyb824/automation_ansible)**
+- **[automation-ansible](https://github.com/timmyb824/automation_ansible)**
 
   - Ansible playbooks for automated system configuration
   - Covers server setup, application deployment, and maintenance tasks
 
-- **[automation_terraform](https://github.com/timmyb824/automation_terraform)**
+- **[automation-terraform](https://github.com/timmyb824/automation_terraform)**
+
   - Infrastructure as Code for cloud resources
   - Primarily focused on Oracle Cloud Infrastructure (OCI)
   - Includes modules for compute, networking, and storage
+
+- **[helper-scripts](https://github.com/timmyb824/helper-scripts)**
+
+  - Collection of Bash scripts for Linux and RHEL/Oracle Linux systems
+  - Includes installation/uninstallation scripts for various tools and configurations (e.g., Podman, Prometheus, etc.)
+  - Features database backup scripts and other utility functions for system maintenance
 
 ## Development Tools
 
@@ -123,8 +131,8 @@ Over my career in Site Reliability Engineering and DevOps, I've worked at compan
 
 ## Connect With Me
 
-- 📝 [Technical Blog](https://blog.timothybryantjr.com)
+- 📝 [Technical Blog](https://timothybryantjr.com/blog)
 - 🔧 [GitHub](https://github.com/timmyb824)
-- 💼 [LinkedIn](https://linkedin.com/in/timothy-bryant-7aa00026)
+- 💼 [LinkedIn](https://linkedin.com/in/timmyb824)
 
 Want to dive deeper into my technical setup? Check out my [homelab page](/homelab) where I detail my home infrastructure and experiments.

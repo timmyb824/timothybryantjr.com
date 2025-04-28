@@ -20,3 +20,8 @@ Thumbs.db
 
 # phpstorm
 .idea/*
+
+# Track my custom theme
+!themes/quark-custom/
+!themes/quark-custom/**
+!accounts/timmyb824.yaml

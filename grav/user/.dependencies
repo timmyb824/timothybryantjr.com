@@ -30,7 +30,7 @@ git:
     relatedpages:
         url: https://github.com/getgrav/grav-plugin-relatedpages
         path: user/plugins/relatedpages
-        branch: master    
+        branch: master
     simplesearch:
         url: https://github.com/getgrav/grav-plugin-simplesearch
         path: user/plugins/simplesearch
@@ -79,7 +79,7 @@ links:
     relatedpages:
         src: grav-plugin-relatedpages
         path: user/plugins/relatedpages
-        scm: github    
+        scm: github
     simplesearch:
         src: grav-plugin-simplesearch
         path: user/plugins/simplesearch
