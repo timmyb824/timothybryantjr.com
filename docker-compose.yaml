@@ -2,6 +2,7 @@
 services:
   grav:
     build: .
+    platform: linux/amd64
     container_name: grav
     restart: unless-stopped
     environment:
