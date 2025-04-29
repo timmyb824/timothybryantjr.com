@@ -49,13 +49,19 @@ fi
 
 build_and_push_image() {
     msg_info "Building image for platform $PLATFORM..."
-    podman build --platform $PLATFORM -t $IMAGE_NAME . --no-cache
+    if ! podman build --platform $PLATFORM -t $IMAGE_NAME . --no-cache; then
+        handle_error "Failed to build image."
+    fi
 
     msg_info "Tagging image..."
-    podman tag $IMAGE_NAME $FULL_IMAGE_NAME
+    if ! podman tag $IMAGE_NAME $FULL_IMAGE_NAME; then
+        handle_error "Failed to tag image."
+    fi
 
     msg_info "Pushing image to registry..."
-    podman push $FULL_IMAGE_NAME
+    if ! podman push $FULL_IMAGE_NAME; then
+        handle_error "Failed to push image."
+    fi
 }
 
 purge_cloudflare_cache() {
@@ -84,7 +90,7 @@ refresh_argocd_app() {
     fi
 }
 
-restart_deployment() {
+restart_argocd_deployment() {
     if command -v kubectl >/dev/null 2>&1; then
         msg_info "Kubectl detected, restarting deployment..."
         kubectl rollout restart deployment/$DEPLOYMENT_NAME -n $NAMESPACE
@@ -97,6 +103,6 @@ restart_deployment() {
 build_and_push_image
 purge_cloudflare_cache
 refresh_argocd_app
-restart_deployment
+restart_argocd_deployment
 
 msg_ok "Deployment script completed successfully!"
