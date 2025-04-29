@@ -8,55 +8,95 @@ ARGOCD_APP_NAME="timothybryantjr"
 ARGOCD_SERVER="argocd.local.timmybtech.com"
 DEPLOYMENT_NAME="timothybryantjr"
 NAMESPACE="timothybryantjr"
-
+CLOUDFLARE_CSS_URL="https://timothybryantjr.com/user/themes/quark-custom/css/custom.css"
 FULL_IMAGE_NAME="$REGISTRY/$IMAGE_NAME:$TAG"
 
+msg_info() {
+    echo -e "\033[1;34m[INFO]\033[0m $1"
+}
+
+msg_ok() {
+    echo -e "\033[1;32m[OK]\033[0m $1"
+}
+
+msg_warn() {
+    echo -e "\033[1;33m[WARN]\033[0m $1"
+}
+
+msg_error() {
+    echo -e "\033[1;31m[ERROR]\033[0m $1"
+}
+
+handle_error() {
+    msg_error "$1"
+    exit 1
+}
+
 if [ "$1" = "skip" ]; then
-    echo "Skipping pre-deployment checks..."
+    msg_info "Skipping pre-deployment checks..."
 else
-    echo "Checking for uncommitted changes..."
+    msg_info "Checking for uncommitted changes..."
     if [[ -n $(git status --porcelain) ]]; then
-        echo "Uncommitted changes detected. Please commit or stash them before deploying."
-        exit 1
+        handle_error "Uncommitted changes detected. Please commit or stash them before deploying."
     fi
 
-    echo "Checking if on main branch..."
+    msg_info "Checking if on main branch..."
     BRANCH=$(git rev-parse --abbrev-ref HEAD)
     if [[ "$BRANCH" != "main" ]]; then
-        echo "You must be on the main branch to deploy (current: $BRANCH)."
-        exit 1
+        handle_error "You must be on the main branch to deploy (current: $BRANCH)."
     fi
 fi
 
-echo "Building image for platform $PLATFORM..."
-podman build --platform $PLATFORM -t $IMAGE_NAME . --no-cache
+build_and_push_image() {
+    msg_info "Building image for platform $PLATFORM..."
+    podman build --platform $PLATFORM -t $IMAGE_NAME . --no-cache
 
-echo "Tagging image..."
-podman tag $IMAGE_NAME $FULL_IMAGE_NAME
+    msg_info "Tagging image..."
+    podman tag $IMAGE_NAME $FULL_IMAGE_NAME
 
-echo "Pushing image to registry..."
-podman push $FULL_IMAGE_NAME
+    msg_info "Pushing image to registry..."
+    podman push $FULL_IMAGE_NAME
+}
 
-if command -v argocd >/dev/null 2>&1; then
-    echo "ArgoCD CLI detected, attempting to refresh application..."
-    argocd login $ARGOCD_SERVER --grpc-web
-    if argocd app get "$ARGOCD_APP_NAME" --grpc-web >/dev/null 2>&1; then
-        argocd app get "$ARGOCD_APP_NAME" --hard-refresh --grpc-web
-        echo "ArgoCD application refresh triggered successfully!"
+purge_cloudflare_cache() {
+    msg_info "Purging Cloudflare cache for $CLOUDFLARE_CSS_URL"
+    curl -s -X POST "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/purge_cache" \
+        -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+        -H "Content-Type: application/json" \
+        --data "{\"files\":[\"$CLOUDFLARE_CSS_URL\"]}" | grep -q '"success":true' &&
+        msg_ok "Cloudflare cache purged successfully!" ||
+        msg_error "Cloudflare cache purge failed!"
+}
+
+refresh_argocd_app() {
+    if command -v argocd >/dev/null 2>&1; then
+        msg_info "ArgoCD CLI detected, attempting to refresh application..."
+        argocd login $ARGOCD_SERVER --grpc-web --username $ARGOCD_USER --password $ARGOCD_USER_PASSWORD
+        if argocd app get "$ARGOCD_APP_NAME" --grpc-web >/dev/null 2>&1; then
+            argocd app get "$ARGOCD_APP_NAME" --hard-refresh --grpc-web
+            msg_ok "ArgoCD application refresh triggered successfully!"
+        else
+            msg_warn "Warning: ArgoCD application '$ARGOCD_APP_NAME' not found. Please verify the application name and your ArgoCD login status."
+            msg_warn "You may need to refresh the application manually via the ArgoCD UI."
+        fi
     else
-        echo "Warning: ArgoCD application '$ARGOCD_APP_NAME' not found. Please verify the application name and your ArgoCD login status."
-        echo "You may need to refresh the application manually via the ArgoCD UI."
+        msg_warn "Note: ArgoCD CLI not found. To update the deployment, please refresh the application in the ArgoCD UI."
     fi
-else
-    echo "Note: ArgoCD CLI not found. To update the deployment, please refresh the application in the ArgoCD UI."
-fi
+}
 
-if command -v kubectl >/dev/null 2>&1; then
-    echo "Kubectl detected, restarting deployment..."
-    kubectl rollout restart deployment/$DEPLOYMENT_NAME -n $NAMESPACE
-    echo "Deployment restarted successfully!"
-else
-    echo "Note: Kubectl not found. To restart the deployment, please run 'kubectl rollout restart deployment/$DEPLOYMENT_NAME' manually."
-fi
+restart_deployment() {
+    if command -v kubectl >/dev/null 2>&1; then
+        msg_info "Kubectl detected, restarting deployment..."
+        kubectl rollout restart deployment/$DEPLOYMENT_NAME -n $NAMESPACE
+        msg_ok "Deployment restarted successfully!"
+    else
+        msg_warn "Note: Kubectl not found. To restart the deployment, please run 'kubectl rollout restart deployment/$DEPLOYMENT_NAME' manually."
+    fi
+}
 
-echo "Deployment script completed successfully!"
+build_and_push_image
+purge_cloudflare_cache
+refresh_argocd_app
+restart_deployment
+
+msg_ok "Deployment script completed successfully!"
