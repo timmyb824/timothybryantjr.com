@@ -34,7 +34,7 @@ Go makes it easy to build static binaries that run anywhere. That means sysinfor
 
 ### What Does sysinformer Do?
 
-sysinformer is designed to save you from having to remember commands like `ip` a or `docker ps --format ...` just to get a clean view of your network interfaces, containers, disks, or other system info. Instead of parsing through raw command output or writing your own scripts, sysinformer presents the information you need in a clear, readable format.
+sysinformer is designed to save you from having to remember commands like `ip a` or `docker ps --format ...` just to get a clean view of your network interfaces, containers, disks, or other system info. Instead of parsing through raw command output or writing your own scripts, sysinformer presents the information you need in a clear, readable format.
 
 ### What’s New?
 
