@@ -26,13 +26,12 @@ My current hardware setup includes:
 
 - **RaspberryPi 3**
 
-  - Dedicated [qdevice](https://blog.jenningsga.com/proxmox-keeping-quorum-with-qdevices/) for Proxmox HA
-  - Lightweight services only due to resource constraints
+  - not currently used mainly due to its performance limitations
 
 - **HP Laptop**
   - Running Ubuntu Server
   - Used for testing and development tasks
-  - Qdevice for Proxmox HA
+  - [qdevice](https://blog.jenningsga.com/proxmox-keeping-quorum-with-qdevices/) for Proxmox HA
 
 ## Network & Storage
 
