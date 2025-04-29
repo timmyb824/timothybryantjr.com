@@ -24,6 +24,6 @@ feed:
 pagination: true
 ---
 
-# **timmyb**
+# **Timothy Bryant Jr.**
 
 ## Brief Musings: Short Posts for Quick Insights and Thoughts
