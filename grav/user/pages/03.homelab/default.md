@@ -76,8 +76,8 @@ Comprehensive monitoring stack including:
 - [Prometheus](https://prometheus.io/) for metrics collection
 - [Grafana](https://grafana.com/) for visualization
 - [Netdata](https://netdata.cloud) for real-time performance monitoring
-- [Uptime Kuma](https://github.com/louislam/uptime-kuma) for service availability monitoring
-- [URL-Pinger](https://github.com/timmyb824/python-URLPinger) for endpoint health checks (built by me)
+- [Uptime Kuma](https://github.com/louislam/uptime-kuma) for monitoring uptime of my public services
+- [PingPulse](https://github.com/timmyb824/pingpulse) for monitoring the health of internal services (built by me)
 - [Loki](https://grafana.com/oss/loki) for log management
 - [Crowdsec](https://github.com/crowdsecurity/crowdsec) for security monitoring and prevention
 
