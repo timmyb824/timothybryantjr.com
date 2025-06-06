@@ -21,12 +21,12 @@ repos:
     -   id: mixed-line-ending
 
 -   repo: https://github.com/sirwart/ripsecrets
-    rev: v0.1.9
+    rev: v0.1.11
     hooks:
     -   id: ripsecrets
 
 -   repo: https://github.com/trufflesecurity/trufflehog
-    rev: v3.88.29
+    rev: v3.89.0
     hooks:
     -   id: trufflehog
         name: TruffleHog
