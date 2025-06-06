@@ -47,6 +47,13 @@ else
     fi
 fi
 
+check_k8s_cluster() {
+    msg_info "Checking we are pointing to the prod cluster (k3s-prod)..."
+    if ! kubectl config current-context | grep -q "k3s-prod"; then
+        handle_error "You must be pointing to the prod cluster (k3s-prod) to deploy."
+    fi
+}
+
 build_and_push_image() {
     msg_info "Building image for platform $PLATFORM..."
     if ! podman build --platform $PLATFORM -t $IMAGE_NAME . --no-cache; then
@@ -100,6 +107,7 @@ restart_argocd_deployment() {
     fi
 }
 
+check_k8s_cluster
 build_and_push_image
 purge_cloudflare_cache
 refresh_argocd_app
