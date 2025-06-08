@@ -80,7 +80,7 @@ However, the Grafana alerts looked terrible in Ntfy. I discovered that Ntfy supp
 
 I spent an hour troubleshooting this. AI was no help. Eventually, I realized the problem: [Apprise](https://github.com/caronc/apprise) doesn’t support sending custom headers.
 
-To fix this, I wrote a new Notifiq module called `ntfy-direct`, which bypasses Apprise and sends messages to Ntfy directly. Even then, I ran into issues with emojis in the titles. AI suggested removing them, but I refused since I had designed my alerts to use specific emojis for quick identification.
+To fix this, I created a new Notifiq module called `ntfy-direct`, which bypasses Apprise and sends messages to Ntfy directly. Even then, I ran into issues with emojis in the titles. AI suggested removing them, but I refused since I had designed my alerts to use specific emojis for quick identification.
 
 Finally, I figured out the root cause:
 
