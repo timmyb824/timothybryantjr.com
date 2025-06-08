@@ -32,7 +32,7 @@ But then I hit another snag. Most of these tools can’t post directly to Rabbit
 
 ### Step 1: Deploying RabbitMQ
 
-My preference is to deploy everything in my homelab to my k3s Kubernetes cluster whenever possible. I don’t run everything there—some things are on VMs with [Podman](https://podman.io/), others as LXC containers via [Proxmox helper scripts](https://community-scripts.github.io/ProxmoxVE/). Surprisingly, I couldn’t find a lot of resources on deploying RabbitMQ to k8s. AI suggested using the Bitnami image, so I went with that.
+My preference is to deploy everything in my homelab to my [k3s](https://k3s.io/) Kubernetes cluster whenever possible. I don’t run everything there—some things are on VMs with [Podman](https://podman.io/), others as LXC containers via [Proxmox helper scripts](https://community-scripts.github.io/ProxmoxVE/). Surprisingly, I couldn’t find a lot of resources on deploying RabbitMQ to k8s. AI suggested using the Bitnami image, so I went with that.
 
 I set everything up for ArgoCD, which I use for GitOps. That’s when I hit my first roadblock. Initially, I was using the Helm chart hosted at [https://charts.bitnami.com/bitnami](https://charts.bitnami.com/bitnami), but I kept getting errors.
 
@@ -48,7 +48,7 @@ It took me about 30mins of head-scratching to figure out the issue. It turns out
 repoURL: registry-1.docker.io/bitnamicharts
 ```
 
-Once that was squared away, the app deployed without further issues.
+Once that (admittedly silly issue) was squared away, the app deployed without further issues.
 
 ### Step 2: Building the Message Dispatcher
 
@@ -58,7 +58,7 @@ Over the next day (and with a lot of help from AI), I built a service I named No
 
 Notifiq is a service that consumes messages from a RabbitMQ queue (plans to support multiple queues) and delivers them to specified providers based on the JSON payload. I used the [Apprise](https://pypi.org/project/apprise/) library for notifications, which supports a ton of providers. While the extensibility was great, Apprise caused a major headache down the road (more on that later).
 
-To test Notifiq, I wrote a simple [script](https://raw.githubusercontent.com/timmyb824/notifiq/refs/heads/main/scripts/send_test_notification.py) that posts messages to RabbitMQ. It worked like a charm.
+To test Notifiq, I wrote a simple [script](https://raw.githubusercontent.com/timmyb824/notifiq/refs/heads/main/scripts/send_test_notification.py) that posts messages to RabbitMQ.
 
 ### Step 3: Getting Messages into RabbitMQ
 
