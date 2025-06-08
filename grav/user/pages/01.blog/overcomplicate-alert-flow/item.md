@@ -22,7 +22,7 @@ Last week, I found myself pondering what kind of project I could tackle next in 
 
 So, I did what anyone does nowadays: I asked AI.
 
-One of the ideas it pitched caught my attention—using RabbitMQ as a central hub for all my alerts. Currently, each tool in my homelab sends notifications to the providers I specify. [Uptime-Kuma](https://github.com/louislam/uptime-kuma) posts to [Mattermost](https://mattermost.com) and [Ntfy](https://ntfy.sh), while [Netalerx](https://netalerx.com) posts only to Ntfy. AI's suggestion was to have all these tools send their alerts to RabbitMQ, which would then dispatch them to the appropriate destinations, mainly Ntfy.
+One of the ideas it pitched caught my attention—using RabbitMQ as a central hub for all my alerts. Currently, each tool in my homelab sends notifications to the providers I specify. [Uptime-Kuma](https://github.com/louislam/uptime-kuma) posts to [Mattermost](https://mattermost.com) and [Ntfy](https://ntfy.sh), while [Netalertx](https://netalerx.com) posts only to Ntfy. AI's suggestion was to have all these tools send their alerts to RabbitMQ, which would then dispatch them to the appropriate destinations, mainly Ntfy.
 
 Initially, I thought, "Great, I'll just have Rabbit send the alerts, and that will simplify things." But that’s obviously not how RabbitMQ, or many pub-sub tools like it—work. You need a service to pick up messages from the queue. AI suggested building my own service for this purpose.
 
