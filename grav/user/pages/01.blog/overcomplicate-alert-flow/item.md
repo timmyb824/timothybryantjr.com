@@ -22,13 +22,13 @@ Last week, I found myself pondering what kind of project I could tackle next in 
 
 So, I did what anyone does nowadays: I asked AI.
 
-One of the ideas it pitched caught my attention—using RabbitMQ as a central hub for all my alerts. Currently, each tool in my homelab sends notifications to the providers I specify. [Uptime-Kuma](https://github.com/louislam/uptime-kuma) posts to Mattermost and [Ntfy](https://ntfy.sh), while [Netalerx](https://netalerx.com) posts only to Ntfy. AI's suggestion was to have all these tools send their alerts to RabbitMQ, which would then dispatch them to the appropriate destinations, mainly Ntfy.
+One of the ideas it pitched caught my attention—using RabbitMQ as a central hub for all my alerts. Currently, each tool in my homelab sends notifications to the providers I specify. [Uptime-Kuma](https://github.com/louislam/uptime-kuma) posts to [Mattermost](https://mattermost.com) and [Ntfy](https://ntfy.sh), while [Netalerx](https://netalerx.com) posts only to Ntfy. AI's suggestion was to have all these tools send their alerts to RabbitMQ, which would then dispatch them to the appropriate destinations, mainly Ntfy.
 
 Initially, I thought, "Great, I'll just have Rabbit send the alerts, and that will simplify things." But that’s obviously not how RabbitMQ, or many pub-sub tools like it—work. You need a service to pick up messages from the queue. AI suggested building my own service for this purpose.
 
 I thought: "Okay, so deploy RabbitMQ and build a service. That’s a decent challenge."
 
-But then I hit another snag. Most of these tools can’t post directly to RabbitMQ due to protocol limitations. I’d need something sitting in front of RabbitMQ to handle this. AI suggested building another service for this purpose. At this point, I started questioning the entire plan, but I decided to give it a go anyway.
+But then I hit another snag. Most of these tools can’t post directly to RabbitMQ due to protocol limitations. I’d need something sitting in front of RabbitMQ to handle this. AI suggested building yet another service for this. At this point, I started questioning the entire plan, but I decided to give it a go anyway.
 
 ### Step 1: Deploying RabbitMQ
 
@@ -42,7 +42,7 @@ After some digging, I discovered that Bitnami had moved to OCI. I updated the re
 "not a valid chart repository or cannot be reached: object required."
 ```
 
-It took me about 30mins of head-scratching to figure out the issue. It turns out that when using OCI images in ArgoCD, you don’t include the oci:// prefix in the repoURL. The correct configuration was simply:
+It took me about 30mins of head-scratching to figure out the issue. It turns out that when using OCI images in ArgoCD, you don’t include the `oci://` prefix in the repoURL. The correct configuration was simply:
 
 ```yaml
 repoURL: registry-1.docker.io/bitnamicharts
@@ -52,9 +52,9 @@ Once that was squared away, the app deployed without further issues.
 
 ### Step 2: Building the Message Dispatcher
 
-Next, I needed to build a service to pick up messages from RabbitMQ and deliver them. I chose Python because, as a non-developer, I’m most comfortable with it. I found a library called [pika](https://pika.readthedocs.io/en/stable/) for handling RabbitMQ in Python.
+Next, I needed to build a service to pick up messages from RabbitMQ and deliver them. I chose Python because, as a non-developer, I’m most comfortable with it. And I found a library called [pika](https://pika.readthedocs.io/en/stable/) for handling RabbitMQ in Python.
 
-Over the next day (with a lot of help from AI), I built a service I named Notifiq (notice + queue). You can find it on GitHub: [https://github.com/timmyb824/notifiq](https://github.com/timmyb824/notifiq).
+Over the next day (and with a lot of help from AI), I built a service I named Notifiq (notice + queue). You can find it on GitHub: [https://github.com/timmyb824/notifiq](https://github.com/timmyb824/notifiq).
 
 Notifiq is a service that consumes messages from a RabbitMQ queue (plans to support multiple queues) and delivers them to specified providers based on the JSON payload. I used the [Apprise](https://pypi.org/project/apprise/) library for notifications, which supports a ton of providers. While the extensibility was great, Apprise caused a major headache down the road (more on that later).
 
@@ -62,17 +62,13 @@ To test Notifiq, I wrote a simple [script](https://raw.githubusercontent.com/tim
 
 ### Step 3: Getting Messages into RabbitMQ
 
-Now came the challenge of getting messages from my tools into RabbitMQ. AI suggested building another service for this, but that felt like _real_ overkill. While separating concerns makes sense in a production environment, managing more services in a homelab isn’t always ideal.
+Now came the challenge of getting messages from my tools into RabbitMQ. AI's suggestion of building another service for this felt like _real_ overkill. While separating concerns makes sense in a production environment, managing more services in a homelab isn’t always ideal.
 
 Then I remembered I already had [n8n](https://n8n.io) running in my cluster, a low-code automation tool I hadn’t really used much. With its webhook node, it seemed like a great candidate for this task.
 
 For each tool (since they have different payload formats), I created an n8n workflow:
 
-**Webhook Node:** Receives the alert.
-
-**Set/Edit Node:** Parses the payload into a `title`, `message`, and fields required by Notifiq (e.g., ntfy topic, destination provider).
-
-**RabbitMQ Node:** Sends the parsed message to RabbitMQ.
+![n8n workflow](n8n-workflow.png)
 
 The first two tools were easy to set up. Then came [Grafana](https://grafana.com), and this is where things got a bit messy.
 
@@ -116,7 +112,7 @@ For emoji control, I used this simple expression in n8n:
 
 After all that, my alert flow now looks like this:
 
-**Tool/Script** → **n8n Workflow** → **RabbitMQ** → **Notifiq** → **Ntfy (or other providers)**
+![alert flow](new-alert-flow.png)
 
 And here’s what it looks like in Ntfy:
 
